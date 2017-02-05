@@ -1,0 +1,100 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<!--
+`animal-button`
+button to play animal sounds 
+
+@demo demo/index.html 
+-->
+
+<dom-module id="animal-button">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #emoji {
+        font-size: 25px;
+        margin: auto;
+        padding: auto;
+      }
+      span {
+        max-width: 25px;
+        max-height: 25px;
+      }
+      paper-button {
+        border-radius: 100%;
+        width: 60px;
+        height: 75px;
+        background-color: white;
+        margin: 10px;
+      }
+    </style>
+    <audio id="audio" src$="[[_sound]]" autostart="false"></audio>
+    <paper-button raised style$="background-color:[[color]];" on-tap="playSound"><span id="emoji">[[emoji]]</span></paper-button>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'animal-button',
+
+      properties: {
+        color: {
+          type: String,
+          value: 'white'
+        },
+        emoji: {
+          type: String,
+          value: '',
+          notify: true,
+          observer: '_updateSound'
+        },
+        _sound: {
+          type: String,
+          value: ''
+        }
+      },
+      playSound: function() {
+        this.$.audio.play();
+      },
+      _updateSound: function() {
+        switch (this.emoji) {
+          case '🐓':
+          case '🐔':
+            this._sound = "../sounds/rooster.mp3";
+            break;
+          case '🐸':
+            this._sound = "../sounds/frog.mp3"
+            break;
+          case '🐶':
+            this._sound = "../sounds/dog.mp3"
+            break;
+          case '🐑':
+            this._sound = "../sounds/sheep.mp3";
+            break;            
+          case '🐘':
+            this._sound = "../sounds/elephant.mp3"
+            break;
+          // case '🐮':
+          //   this.sound = "sounds/cow.mp3"
+          //   break;
+          // case '🐱':
+          //   this.sound = "sounds/cat.mp3"
+          //   break;
+          // case '🐬':
+          //   this.sound = "sounds/dolphin.mp3"
+          //   break;
+          // case '🐝':
+          //   this.sound = "sounds/bee.mp3"
+          //   break;
+          // case '🐅':
+          //   this.sound = "sounds/tiger.mp3"
+          //   break;
+        }
+      }
+
+    });
+  </script>
+</dom-module>
